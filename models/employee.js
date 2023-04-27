@@ -29,12 +29,20 @@ const employeeSchema = mongoose.Schema({
         type: String,
         required : true
     },
-    trngsCmpltd : {
+    trngsCompleted : {
         type : Number,
         required : false
     },
     completedTrainings : {
         type : Array,
+        required : false
+    },
+    ongoingTrainings : {
+        type : Array,
+        required : false
+    },
+    trngsOngoing : {
+        type : Number,
         required : false
     }
     

@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // Employee Routes
-router.get('/allEmployees', async (req, res) => {
+router.get('/all', async (req, res) => {
     try{
         const employeeData = await Employees.find({})
         res.send(employeeData)
@@ -14,10 +14,10 @@ router.get('/allEmployees', async (req, res) => {
         console.log(err)
     }
 })
-router.get('/allEmployees/:id', async (req, res) => {
+router.get('/getOne/:email', async (req, res) => {
     try{
-        const id = req.params.id
-        const employeeData = await Employees.findById(id)
+        const email = req.params.email
+        const employeeData = await Employees.findOne({email : email})
         res.send(employeeData)
     }
     catch(err){
@@ -36,7 +36,7 @@ router.post('/addEmployee', async (req, res) => {
             deptName : deptName
         })
         await employeeData.save()
-        res.send("Employee Added Successfully")
+        res.json(employeeData)
     }   
     catch(err) {
         console.log(err)

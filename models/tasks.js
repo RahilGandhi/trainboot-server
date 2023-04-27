@@ -21,7 +21,3 @@ const taskSchema = mongoose.Schema({
 
 module.exports = mongoose.model('Tasks', taskSchema);
 
-/*
-Add employee id field to identify who is the task assigned to.
-create a task Id field for quesrying purposes.
-*/
