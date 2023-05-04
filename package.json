@@ -15,9 +15,17 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongoose": "^7.0.3"
+    "mongoose": "^7.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RahilGandhi/trainboot-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RahilGandhi/trainboot-server/issues"
+  },
+  "homepage": "https://github.com/RahilGandhi/trainboot-server#readme"
 }

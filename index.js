@@ -1,4 +1,4 @@
-const express = require('express')
+const express =  require('express')
 const { connection } = require('./database/db')
 const mongoose = require ('mongoose')
 const cors = require('cors')
@@ -7,6 +7,8 @@ const { router } = require('express')
 const employeeRouter = require('./routes/Employee')
 const taskRouter = require('./routes/Tasks')
 const trainingRouter = require('./routes/Training')
+
+
 const app = express();
 
 // Middleware to parse JSON body
