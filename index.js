@@ -1,4 +1,4 @@
-const express =  require('express')
+import { Express } from 'express'
 const { connection } = require('./database/db')
 const mongoose = require ('mongoose')
 const cors = require('cors')

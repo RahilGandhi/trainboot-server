@@ -11,6 +11,8 @@ router.get('/all', async (req, res) => {
     res.json(data)
 })
 
+// Create Training
+
 // Employee Starts training
 router.post('/startTraining', async (req, res) => {
     try{
