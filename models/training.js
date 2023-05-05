@@ -19,7 +19,7 @@ const trainingSchema = mongoose.Schema({
     },
     duration : {
         type: String,
-        required : true,
+        required : false,
     },
     thumbnail : {
         type : String,

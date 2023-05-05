@@ -9,6 +9,10 @@ router.get('/all', async (req, res) => {
     const data = await Tasks.find({})
     res.send(data)
 })
+router.get('/:email', async (req,res) => {
+    const data = await Tasks.find({assignedTo: req.params.email})
+    res.send(data)
+})
 
 // Create Task
 router.post('/createTask', async (req, res) => {

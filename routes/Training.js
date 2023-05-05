@@ -12,6 +12,24 @@ router.get('/all', async (req, res) => {
 })
 
 // Create Training
+router.post('/createTraining', async (req, res) => {
+    try{
+        const {name, instructor, training_id, src, summary } = req.body
+        const trainingData = new Trainings({
+            name : name,
+            instructor : instructor,
+            training_id : training_id,
+            src : src,
+            summary : summary
+        })
+        await trainingData.save()
+        res.json(trainingData)
+    }
+    catch(error){
+        console.log(error)
+    }
+   
+})
 
 // Employee Starts training
 router.post('/startTraining', async (req, res) => {
@@ -26,6 +44,7 @@ router.post('/startTraining', async (req, res) => {
         }
         doc.trngsOngoing = doc.trngsOngoing + 1
         doc.ongoingTrainings.push(update)
+        console.log(doc)
         await doc.save() 
         res.json(update)  
         
@@ -36,7 +55,28 @@ router.post('/startTraining', async (req, res) => {
 })
 
 // Employee completes training  
-
+router.post('/finishTraining', async (req,res) => {
+    try{
+        const userMail = req.body.email
+        const trainingInfo = req.body.training_id
+        const doc = await Employees.findOne({email: userMail})
+        const trainingData = await Trainings.findOne({training_id: trainingInfo})
+        const update = {
+            training_id: trainingData.training_id,
+            name : trainingData.name,
+            completed : true,
+        }
+        doc.ongoingTrainings.pop()
+        doc.completedTrainings.push(update)
+        doc.trngsOngoing = doc.trngsOngoing - 1
+        doc.trngsCompleted = doc.trngsCompleted + 1
+        await doc.save()
+        res.json(update)
+    }
+    catch(error){
+        console.log(error)
+    }
+})
 
 
 
