@@ -16,7 +16,6 @@ const app = express();
 app.use(express.json());
 app.use(cors())
 connection()
-
 // Define routes
 app.get('/', (req, res) => {
   res.send('Hello, world!');
@@ -26,6 +25,7 @@ app.use('/admin', adminRouter)
 app.use('/tasks', taskRouter)
 app.use('/trainings', trainingRouter)
 app.use('/announcements', announcementRouter)
+
 // Start server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

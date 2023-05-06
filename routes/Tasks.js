@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const Tasks = require('../models/tasks')
+const Tasks = require('../models/tasks');
+const tasks = require('../models/tasks');
 const router = express.Router();
 
 // Tasks Routes 
@@ -27,6 +28,14 @@ router.post('/createTask', async (req, res) => {
     res.redirect('/tasks/all')
 })
 
+// Employee Completes Task
+router.post('/complete', async (req,res) => {
+    const id = req.body.id
+    const doc = await tasks.findById(id)
+    doc.completed = true
+    await doc.save()
+    res.json(doc)
+})
 
 // Export Module
 module.exports = router;
