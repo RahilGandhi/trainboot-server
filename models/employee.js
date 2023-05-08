@@ -31,7 +31,8 @@ const employeeSchema = mongoose.Schema({
     },
     trngsCompleted : {
         type : Number,
-        required : false
+        required : false,
+        default: 0
     },
     completedTrainings : {
         type : Array,
@@ -39,11 +40,12 @@ const employeeSchema = mongoose.Schema({
     },
     ongoingTrainings : {
         type : Array,
-        required : false
+        required : false,
     },
     trngsOngoing : {
         type : Number,
-        required : false
+        required : false,
+        default : 0
     }
     
 })

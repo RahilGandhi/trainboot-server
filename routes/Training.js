@@ -11,6 +11,11 @@ router.get('/all', async (req, res) => {
     res.json(data)
 })
 
+// Get one trainings
+router.get('/:training_id', async (req,res) => {
+    const data = await Trainings.findOne({training_id : req.params.training_id})
+    res.json(data)
+})
 // Create Training
 router.post('/createTraining', async (req, res) => {
     try{
