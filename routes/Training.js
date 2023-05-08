@@ -42,7 +42,15 @@ router.post('/startTraining', async (req, res) => {
         const userMail = req.body.email
         const trainingInfo = req.body.training_id
         const doc = await Employees.findOne({email:userMail})
-        const trainingData = await Trainings.findOne({training_id: trainingInfo})
+        const trainingData = await Trainings.findOne({training_id: trainingInfo});
+        let alreadyExists = false;
+        doc.ongoingTrainings.forEach((trainings) => {
+            if(trainings.training_id == trainingInfo){
+                alreadyExists = true;
+                return res.json({message : 'already exists'})
+            }
+        });
+        if(!alreadyExists){
         const update = {
             training_id : trainingData.training_id,
             name : trainingData.name
@@ -51,7 +59,7 @@ router.post('/startTraining', async (req, res) => {
         doc.ongoingTrainings.push(update)
         console.log(doc)
         await doc.save() 
-        res.json(update)  
+        res.json(doc.ongoingTrainings)  }
         
     }
     catch(error){
@@ -66,17 +74,27 @@ router.post('/finishTraining', async (req,res) => {
         const trainingInfo = req.body.training_id
         const doc = await Employees.findOne({email: userMail})
         const trainingData = await Trainings.findOne({training_id: trainingInfo})
-        const update = {
-            training_id: trainingData.training_id,
-            name : trainingData.name,
-            completed : true,
+        let alreadyExists = false;
+        doc.completedTrainings.forEach((trainings) => {
+            if(trainings.training_id == trainingInfo){
+                alreadyExists = true;
+                return res.json({message : 'already exists'})
+            }
+        });
+        if(!alreadyExists){
+            const update = {
+                training_id: trainingData.training_id,
+                name : trainingData.name,
+                completed : true,
+            }
+            doc.ongoingTrainings.pop()
+            doc.completedTrainings.push(update)
+            doc.trngsOngoing = doc.trngsOngoing - 1
+            doc.trngsCompleted = doc.trngsCompleted + 1
+            await doc.save()
+            res.json(update)
         }
-        doc.ongoingTrainings.pop()
-        doc.completedTrainings.push(update)
-        doc.trngsOngoing = doc.trngsOngoing - 1
-        doc.trngsCompleted = doc.trngsCompleted + 1
-        await doc.save()
-        res.json(update)
+        
     }
     catch(error){
         console.log(error)
