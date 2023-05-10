@@ -20,12 +20,13 @@ router.get('/:id', async (req,res) => {
 // Create Training
 router.post('/createTraining', async (req, res) => {
     try{
-        const {name, instructor, src, summary } = req.body
+        const {name, instructor, src, summary, thumbnail } = req.body
         const trainingData = new Trainings({
             name : name,
             instructor : instructor,
             src : src,
-            summary : summary
+            summary : summary,
+            thumbnail : thumbnail
         })
         await trainingData.save()
         res.json(trainingData)
