@@ -10,9 +10,23 @@ const announcementRouter = require('./routes/Announcements')
 const trainingRouter = require('./routes/Training')
 const adminRouter = require('./routes/Admin')
 
+const whitelist = ["https://trainboot.netlify.app", 'https://admin-trainboot.netlify.app', "http://localhost:3000", "http://localhost:3001"]
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error())
+    }
+  },
+  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}
+
+app.use(cors(corsOptions))
+
 const app = express();
 
-app.use(cors())
 
 // Middleware to parse JSON body
 app.use(express.json());
