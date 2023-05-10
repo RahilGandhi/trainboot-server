@@ -12,18 +12,18 @@ router.get('/all', async (req, res) => {
 })
 
 // Get one trainings
-router.get('/:training_id', async (req,res) => {
-    const data = await Trainings.findOne({training_id : req.params.training_id})
+router.get('/:id', async (req,res) => {
+    const data = await Trainings.findOne({_id : req.params.id})
     res.json(data)
 })
+
 // Create Training
 router.post('/createTraining', async (req, res) => {
     try{
-        const {name, instructor, training_id, src, summary } = req.body
+        const {name, instructor, src, summary } = req.body
         const trainingData = new Trainings({
             name : name,
             instructor : instructor,
-            training_id : training_id,
             src : src,
             summary : summary
         })
@@ -40,19 +40,19 @@ router.post('/createTraining', async (req, res) => {
 router.post('/startTraining', async (req, res) => {
     try{
         const userMail = req.body.email
-        const trainingInfo = req.body.training_id
+        const trainingInfo = req.body.id
         const doc = await Employees.findOne({email:userMail})
-        const trainingData = await Trainings.findOne({training_id: trainingInfo});
+        const trainingData = await Trainings.findOne({_id: trainingInfo});
         let alreadyExists = false;
         doc.ongoingTrainings.forEach((trainings) => {
-            if(trainings.training_id == trainingInfo){
+            if(trainings._id == trainingInfo){
                 alreadyExists = true;
                 return res.json({message : 'already exists'})
             }
         });
         if(!alreadyExists){
         const update = {
-            training_id : trainingData.training_id,
+            _id : trainingData.id,
             name : trainingData.name
         }
         doc.trngsOngoing = doc.trngsOngoing + 1
@@ -71,19 +71,19 @@ router.post('/startTraining', async (req, res) => {
 router.post('/finishTraining', async (req,res) => {
     try{
         const userMail = req.body.email
-        const trainingInfo = req.body.training_id
+        const trainingInfo = req.body.id
         const doc = await Employees.findOne({email: userMail})
-        const trainingData = await Trainings.findOne({training_id: trainingInfo})
+        const trainingData = await Trainings.findOne({_id: trainingInfo})
         let alreadyExists = false;
         doc.completedTrainings.forEach((trainings) => {
-            if(trainings.training_id == trainingInfo){
+            if(trainings._id == trainingInfo){
                 alreadyExists = true;
                 return res.json({message : 'already exists'})
             }
         });
         if(!alreadyExists){
             const update = {
-                training_id: trainingData.training_id,
+                _id: trainingData.id,
                 name : trainingData.name,
                 completed : true,
             }

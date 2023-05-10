@@ -9,13 +9,14 @@ router.get('/all', async (req,res) => {
 })
 
 router.post('/create', async (req,res) => {
-    const {title, date } = req.body
+    const {title, date, time } = req.body
     const announcement = new Announcements({
         title : title,
-        date : date
+        date : date,
+        time : time
     })
     await announcement.save()
-    res.send(200)
+    res.json({"message" : "Announcement Created Successfully"}).status(200)
 })
 
 module.exports = router

@@ -9,7 +9,7 @@ const announcementSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    desc : {
+    time : {
         type: String,
         required: false
     }

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const trainingSchema = mongoose.Schema({
     training_id : {
         type: String,
-        required : true
+        required : false
     },
     name : {
         type : String,

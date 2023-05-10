@@ -12,9 +12,11 @@ const adminRouter = require('./routes/Admin')
 
 const app = express();
 
+app.use(cors())
+
 // Middleware to parse JSON body
 app.use(express.json());
-app.use(cors())
+
 connection()
 // Define routes
 app.get('/', (req, res) => {
