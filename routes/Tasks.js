@@ -17,12 +17,11 @@ router.get('/:email', async (req,res) => {
 
 // Create Task
 router.post('/createTask', async (req, res) => {
-    const { description, assignedTo, deadline, completed } = req.body
+    const { description, assignedTo, deadline } = req.body
     const taskData = new Tasks({
         description : description,
         assignedTo : assignedTo,
-        deadline : deadline,
-        completed : completed
+        deadline : deadline
     })
     await taskData.save()
     res.redirect('/tasks/all')
