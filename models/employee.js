@@ -46,6 +46,11 @@ const employeeSchema = mongoose.Schema({
         type : Number,
         required : false,
         default : 0
+    },
+    tasksCompleted : {
+        type : Number,
+        required : false,
+        default : 0
     }
     
 })

@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Tasks = require('../models/tasks');
+const employees = require('../models/employee')
 const tasks = require('../models/tasks');
 const router = express.Router();
 
@@ -31,8 +32,12 @@ router.post('/createTask', async (req, res) => {
 router.post('/complete', async (req,res) => {
     const id = req.body.id
     const doc = await tasks.findById(id)
+    const employee = await employees.findOne({email : doc.assignedTo})
+    employee.tasksCompleted = employee.tasksCompleted + 1
+    console.log(employee.tasksCompleted)
     doc.completed = true
     await doc.save()
+    await employee.save()
     res.json(doc)
 })
 
